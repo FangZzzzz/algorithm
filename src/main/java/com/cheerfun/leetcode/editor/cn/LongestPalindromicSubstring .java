@@ -20,11 +20,12 @@ class LongestPalindromicSubstring {
     // todo 不会，学
     public static void main(String[] args) {
         Solution solution = new LongestPalindromicSubstring().new Solution();
+        System.out.println(solution.longestPalindrome("a"));
     }
 
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
-        public String longestPalindrome(String s) {
+/*        public String longestPalindrome(String s) {
             if (s == null || s.length() == 0) {
                 return "";
             }
@@ -47,6 +48,23 @@ class LongestPalindromicSubstring {
                 r++;
             }
             return r - l - 1;
+        }*/
+
+        public String longestPalindrome(String s) {
+            if (s == null || s.length() == 0) {
+                return "";
+            }
+            String result = "";
+            boolean[][] dp = new boolean[s.length()][s.length()];
+            for (int r = 0; r < s.length(); r++) {
+                for (int l = 0; l <= r; l++) {
+                    dp[l][r] = s.charAt(l) == s.charAt(r) && (r - l <= 2 || dp[l + 1][r - 1]);
+                    if (dp[l][r] && r - l + 1 > result.length()) {
+                        result = s.substring(l, r + 1);
+                    }
+                }
+            }
+            return result;
         }
     }
 //leetcode submit region end(Prohibit modification and deletion)
