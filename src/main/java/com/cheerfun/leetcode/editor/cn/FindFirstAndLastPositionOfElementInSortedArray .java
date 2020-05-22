@@ -31,45 +31,41 @@ class FindFirstAndLastPositionOfElementInSortedArray {
             if (nums == null || nums.length == 0) {
                 return result;
             }
-            result[0] = left(nums, target);
-            result[1] = right(nums, target);
+            result[0] = getLeft(nums, target);
+            result[1] = getRight(nums, target);
             return result;
         }
 
-        private int left(int[] nums, int target) {
-            int left = 0, right = nums.length - 1;
-            while (left <= right) {
-                int mid = left + (right - left) / 2;
-                if (nums[mid] < target) {
-                    left = mid + 1;
-                } else if (nums[mid] > target) {
-                    right = mid - 1;
-                } else if (nums[mid] == target) {
-                    right = mid - 1;
+        private int getLeft(int nums[], int target) {
+            int l = 0, r = nums.length - 1;
+            while (l <= r) {
+                int mid = l + (r - l) / 2;
+                if (nums[mid] >= target) {
+                    r = mid - 1;
+                } else if (nums[mid] < target) {
+                    l = mid + 1;
                 }
             }
-            if (left >= nums.length || nums[left] != target) {
+            if (l >= nums.length || nums[l] != target) {
                 return -1;
             }
-            return left;
+            return l;
         }
 
-        private int right(int[] nums, int target) {
-            int left = 0, right = nums.length - 1;
-            while (left <= right) {
-                int mid = left + (right - left) / 2;
-                if (nums[mid] < target) {
-                    left = mid + 1;
+        private int getRight(int nums[], int target) {
+            int l = 0, r = nums.length - 1;
+            while (l <= r) {
+                int mid = l + (r - l) / 2;
+                if (nums[mid] <= target) {
+                    l = mid + 1;
                 } else if (nums[mid] > target) {
-                    right = mid - 1;
-                } else if (nums[mid] == target) {
-                    left = mid + 1;
+                    r = mid - 1;
                 }
             }
-            if (right < 0 || nums[right] != target) {
+            if (r < 0 || nums[r] != target) {
                 return -1;
             }
-            return right;
+            return r;
         }
     }
 //leetcode submit region end(Prohibit modification and deletion)
