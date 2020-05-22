@@ -39,17 +39,19 @@ class DecodeWays {
             }
             int pre = 1, cur = 1;
             for (int i = 1; i < s.length(); i++) {
-                int tmp = cur;
-                if (s.charAt(i) == '0') {
-                    if (s.charAt(i - 1) == '1' || s.charAt(i - 1) == '2') {
+                char preCh = s.charAt(i - 1);
+                char curCh = s.charAt(i);
+                int temp = cur;
+                if (curCh == '0') {
+                    if (preCh == '1' || preCh == '2') {
                         cur = pre;
                     } else {
                         return 0;
                     }
-                } else if (s.charAt(i - 1) == '1' || s.charAt(i - 1) == '2' && s.charAt(i) >= '1' && s.charAt(i) <= '6') {
+                } else if(preCh == '1' || preCh == '2' && curCh >= '1' && curCh <= '6') {
                     cur = cur + pre;
                 }
-                pre = tmp;
+                pre = temp;
             }
             return cur;
         }
