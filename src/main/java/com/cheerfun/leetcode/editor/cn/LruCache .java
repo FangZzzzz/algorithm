@@ -30,39 +30,111 @@
 
 package com.cheerfun.leetcode.editor.cn;
 
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.Map;
 
 class LruCache {
     public static void main(String[] args) {
+        /*LRUCache lruCache = new LRUCache(2);
+        lruCache.put(1,1);
+        lruCache.put(2,2);
+        lruCache.get(1);
+        lruCache.put(3,3);
+        lruCache.get(2);
+        lruCache.put(4,4);
+        lruCache.get(1);
+        lruCache.get(3);
+        lruCache.get(4);*/
     }
 
     //leetcode submit region begin(Prohibit modification and deletion)
     class LRUCache {
-        LinkedHashMap<Integer, Integer> map;
+
+        Map<Integer, ListNode> map = new HashMap<>();
+        ListNode head;
+        ListNode tail;
         int capacity;
 
         public LRUCache(int capacity) {
             this.capacity = capacity;
-            map = new LinkedHashMap(0, 0.75f, true) {
-                @Override
-                protected boolean removeEldestEntry(Map.Entry eldest) {
-                    return size() > capacity;
-                }
-            };
+            head = new ListNode();
+            tail = new ListNode();
+            head.next = tail;
+            tail.pre = head;
         }
 
         public int get(int key) {
+            int result = -1;
+            ListNode cur = null;
             if (map.containsKey(key)) {
-                return map.get(key);
+                cur = map.get(key);
             }
-            return -1;
+            if (cur != null) {
+                result = cur.val;
+                removeNode(cur);
+                addHeadNode(cur);
+            }
+            return result;
         }
 
         public void put(int key, int value) {
-            map.put(key, value);
+            ListNode cur = null;
+            if (map.containsKey(key)) {
+                cur = map.get(key);
+            }
+            if (cur != null) {
+                cur.val = value;
+                removeNode(cur);
+                addHeadNode(cur);
+                return;
+            }
+            if (map.size() == capacity) {
+                ListNode listNode = removeLast();
+                map.remove(listNode.key);
+            }
+            cur = new ListNode(key, value);
+            addHeadNode(cur);
+            map.put(key, cur);
+        }
+
+        private ListNode removeLast() {
+            ListNode last = tail.pre;
+            removeNode(last);
+            return last;
+        }
+
+        private void removeNode(ListNode node) {
+            ListNode pre = node.pre;
+            ListNode next = node.next;
+            pre.next = next;
+            next.pre = pre;
+        }
+
+        private void addHeadNode(ListNode node) {
+            ListNode next = head.next;
+            head.next = node;
+            node.next = next;
+            node.pre = head;
+            next.pre = node;
+        }
+
+        class ListNode {
+            int val;
+            int key;
+            ListNode pre;
+            ListNode next;
+
+            public ListNode() {
+            }
+
+            public ListNode(int key, int val) {
+                this.key = key;
+                this.val = val;
+            }
         }
     }
+
+
 
 /**
  * Your LRUCache object will be instantiated and called as such:
