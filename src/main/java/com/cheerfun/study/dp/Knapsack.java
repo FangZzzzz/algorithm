@@ -15,7 +15,7 @@ public class Knapsack {
     public static void main(String[] args) {
         Knapsack knapsack = new Knapsack();
         System.out.println(knapsack._01knapsack_01(new int[]{1, 1, 1, 2, 3}, 9));
-        System.out.println(knapsack._01knapsack_03(new int[]{1, 1, 1, 2, 3}, new int[]{3, 3, 3, 3, 3}, 9));
+        System.out.println(knapsack._01knapsack_04(new int[]{1, 1, 1, 2, 3}, new int[]{3, 3, 3, 3, 3}, 9));
 
     }
 
@@ -116,6 +116,32 @@ public class Knapsack {
                 if (status[i - 1][j] != -1) {
                     status[i][j + weights[i]] = status[i - 1][j] + values[i];
                     maxValue = Math.max(maxValue, status[i][j + weights[i]]);
+                }
+            }
+        }
+        return maxValue;
+    }
+
+    public int _01knapsack_04(int[] weights, int[] values, int w) {
+        if (weights == null || values == null
+                || weights.length == 0
+                || weights.length != values.length
+                || w == 0) {
+            return 0;
+        }
+        int maxValue = -1;
+        int n = weights.length;
+        int[] status = new int[w + 1];
+        Arrays.fill(status, -1);
+        status[0] = 0;
+        if (weights[0] <= w) {
+            status[weights[0]] = values[0];
+        }
+        for (int i = 1; i < n; i++) {
+            for (int j = w - weights[i]; j >= 0; j--) {
+                if (status[j] != -1) {
+                    status[j + weights[i]] = status[j] + values[i];
+                    maxValue = Math.max(maxValue, status[j + weights[i]]);
                 }
             }
         }
