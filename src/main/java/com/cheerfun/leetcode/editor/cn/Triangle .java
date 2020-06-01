@@ -25,6 +25,7 @@
 
 package com.cheerfun.leetcode.editor.cn;
 
+import java.util.Arrays;
 import java.util.List;
 
 class Triangle {
@@ -103,7 +104,6 @@ class Triangle {
             for(int i = 0; i < size; i ++) {
                 dp[i] = triangle.get(size - 1).get(i);
             }
-
             for(int i = size - 2; i >= 0; i--) {
                 for(int j = 0; j <= i; j ++) {
                     dp[j] = Math.min(dp[j], dp[j+1]) + triangle.get(i).get(j);
