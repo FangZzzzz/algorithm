@@ -16,7 +16,6 @@ public class Knapsack {
         Knapsack knapsack = new Knapsack();
         System.out.println(knapsack._01knapsack_01(new int[]{1, 1, 1, 2, 3}, 9));
         System.out.println(knapsack._01knapsack_04(new int[]{2,3,5,5}, new int[]{2, 4, 3, 7}, 10));
-
     }
 
     /**
