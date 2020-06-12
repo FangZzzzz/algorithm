@@ -44,50 +44,42 @@ class EditDistance {
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
         public int minDistance(String word1, String word2) {
-            if (word1 == null || word1.length() == 0) {
-                if (word2 == null) {
-                    return 0;
-                } else {
-                    return word2.length();
-                }
+            if (word1.length() == 0) {
+                return word2.length();
             }
-            if (word2 == null || word2.length() == 0) {
-                if (word1 == null) {
-                    return 0;
-                } else {
-                    return word1.length();
-                }
+            if (word2.length() == 0) {
+                return word1.length();
             }
-            int[][] dp = new int[word1.length()][word2.length()];
-            for (int i = 0; i < word1.length(); i++) {
+            int n = word1.length(), m = word2.length();
+            int[][] dp = new int[n][m];
+            for (int i = 0; i < n; i++) {
                 if (word1.charAt(i) == word2.charAt(0)) {
                     dp[i][0] = i;
-                } else if (i != 0) {
+                } else if (i == 0) {
+                    dp[i][0] = 1;
+                } else {
                     dp[i][0] = dp[i - 1][0] + 1;
-                } else {
-                    dp[0][0] = 1;
                 }
             }
-
-            for (int i = 0; i < word2.length(); i++) {
-                if (word1.charAt(0) == word2.charAt(i)) {
+            for (int i = 0; i < m; i++) {
+                if (word2.charAt(i) == word1.charAt(0)) {
                     dp[0][i] = i;
-                } else if (i != 0) {
-                    dp[0][i] = dp[0][i - 1] + 1;
+                } else if (i == 0) {
+                    dp[0][i] = 1;
                 } else {
-                    dp[0][0] = 1;
+                    dp[0][i] = dp[0][i - 1] + 1;
                 }
             }
-            for (int i = 1; i < word1.length(); i++) {
-                for (int j = 1; j < word2.length(); j++) {
+            for (int i = 1; i < n; i++) {
+                for (int j = 1; j < m; j++) {
                     if (word1.charAt(i) == word2.charAt(j)) {
-                        dp[i][j] = Math.min(Math.min(dp[i - 1][j] + 1, dp[i][j - 1] + 1), dp[i - 1][j - 1]);
+                        dp[i][j] = Math.min(Math.min(dp[i - 1][j], dp[i][j - 1]) + 1, dp[i - 1][j - 1]);
                     } else {
-                        dp[i][j] = 1 + Math.min(Math.min(dp[i - 1][j - 1], dp[i - 1][j]), dp[i][j - 1]);
+                        dp[i][j] = Math.min(Math.min(dp[i - 1][j], dp[i][j - 1]), dp[i - 1][j - 1]) + 1;
                     }
                 }
             }
-            return dp[word1.length() - 1][word2.length() - 1];
+            return dp[n - 1][m - 1];
         }
     }
 //leetcode submit region end(Prohibit modification and deletion)
