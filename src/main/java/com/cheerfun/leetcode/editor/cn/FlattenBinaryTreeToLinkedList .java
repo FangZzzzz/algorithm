@@ -55,6 +55,8 @@ class FlattenBinaryTreeToLinkedList {
 
     class Solution {
         public void flatten(TreeNode root) {
+            // 把根的右子树 移植到左子树的右子树上
+            // 然后把根的左子树变成右子树
             while (root != null) {
                 if (root.left == null) {
                     root = root.right;
