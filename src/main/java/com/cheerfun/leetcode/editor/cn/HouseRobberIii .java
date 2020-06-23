@@ -62,13 +62,16 @@ class HouseRobberIii {
             if (root == null) {
                 return 0;
             }
+            // 偷现在这家
             int money = root.val;
+            // 只能偷下面的下面
             if (root.left != null) {
                 money += (rob01(root.left.left) + rob01(root.left.right));
             }
             if (root.right != null) {
                 money += (rob01(root.right.left) + rob01(root.right.right));
             }
+            // 不偷现在，偷左边加右边
             return Math.max(money, rob01(root.left) + rob01(root.right));
         }
 

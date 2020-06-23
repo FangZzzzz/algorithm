@@ -60,7 +60,7 @@ class LowestCommonAncestorOfABinaryTree {
             if (left != null && right != null) {
                 return root;
             }
-            return left == null ? right: left;
+            return left == null ? right :left;
         }
     }
 //leetcode submit region end(Prohibit modification and deletion)

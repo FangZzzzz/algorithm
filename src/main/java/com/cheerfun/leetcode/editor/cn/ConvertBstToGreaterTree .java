@@ -24,6 +24,7 @@
 
 package com.cheerfun.leetcode.editor.cn;
 
+
 import java.util.ArrayDeque;
 import java.util.Deque;
 
@@ -51,17 +52,17 @@ class ConvertBstToGreaterTree {
          * @return
          */
         public TreeNode convertBST(TreeNode root) {
-            Deque<TreeNode> stack = new ArrayDeque<>();
+            Deque<TreeNode> deque = new ArrayDeque<>();
             TreeNode cur = root;
             int sum = 0;
-            while (cur != null || !stack.isEmpty()) {
+            while (cur != null || !deque.isEmpty()) {
                 while (cur != null) {
-                    stack.addLast(cur);
+                    deque.addLast(cur);
                     cur = cur.right;
                 }
-                cur = stack.removeLast();
-                sum += cur.val;
-                cur.val = sum;
+                cur = deque.removeLast();
+                cur.val += sum;
+                sum = cur.val;
                 cur = cur.left;
             }
             return root;

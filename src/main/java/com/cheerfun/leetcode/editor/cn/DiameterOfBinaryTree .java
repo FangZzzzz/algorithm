@@ -52,9 +52,7 @@ class DiameterOfBinaryTree {
             }
             int left = depth(root.left, holder);
             int right = depth(root.right, holder);
-
             holder.max = Math.max(holder.max, left + right);
-
             return Math.max(left, right) + 1;
         }
 
