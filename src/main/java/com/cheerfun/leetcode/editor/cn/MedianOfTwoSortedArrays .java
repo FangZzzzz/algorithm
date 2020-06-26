@@ -28,26 +28,20 @@ package com.cheerfun.leetcode.editor.cn;
 class MedianOfTwoSortedArrays {
     public static void main(String[] args) {
         Solution solution = new MedianOfTwoSortedArrays().new Solution();
-        solution.findMedianSortedArrays(new int[]{2, 3, 5}, new int[]{1, 4, 7, 9});
+        solution.findMedianSortedArrays(new int[]{1}, new int[]{2, 3});
     }
 
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
         public double findMedianSortedArrays(int[] nums1, int[] nums2) {
-            int n = 0, m = 0;
-            if (nums1 != null) {
-                n = nums1.length;
-            }
-            if (nums2 != null) {
-                m = nums2.length;
-            }
+            int n = nums1.length, m = nums2.length;
             if (n > m) {
                 return findMedianSortedArrays(nums2, nums1);
             }
-            int l1 = 0, l2 = 0, r1 = 0, r2 = 0, c2 = 0, l = 0, r = n * 2;
+            int l1 = 0, l2 = 0, r1 = 0, r2 = 0, l = 0, r = 2 * n;
             while (l <= r) {
                 int c1 = l + (r - l) / 2;
-                c2 = m + n - c1;
+                int c2 = m + n - c1;
                 l1 = c1 == 0 ? Integer.MIN_VALUE : nums1[(c1 - 1) / 2];
                 r1 = c1 == 2 * n ? Integer.MAX_VALUE : nums1[c1 / 2];
                 l2 = c2 == 0 ? Integer.MIN_VALUE : nums2[(c2 - 1) / 2];
