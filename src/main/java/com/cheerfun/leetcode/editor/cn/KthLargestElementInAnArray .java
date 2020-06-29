@@ -28,7 +28,7 @@ class KthLargestElementInAnArray {
 
     //leetcode submit region begin(Prohibit modification and deletion)
     class Solution {
-        public int findKthLargest(int[] nums, int k) {
+        public int findKthLargest_01(int[] nums, int k) {
             PriorityQueue<Integer> heap = new PriorityQueue<>(nums.length, Comparator.comparingInt(o -> o));
             for (int num : nums) {
                 if (heap.size() < k) {
@@ -39,6 +39,43 @@ class KthLargestElementInAnArray {
                 }
             }
             return heap.peek();
+        }
+
+        public int findKthLargest(int[] nums, int k) {
+            if (nums == null || k > nums.length) {
+                return -1;
+            }
+            return quickSortFind(nums, 0, nums.length - 1, k);
+        }
+
+        public int quickSortFind(int[] nums, int l, int r, int k) {
+            if (l > r) {
+                return -1;
+            }
+            int start = l, end = r;
+            int point = nums[l];
+            while (start < end) {
+                while (start < end && point >= nums[end]) {
+                    end--;
+                }
+                if (start < end) {
+                    nums[start++] = nums[end];
+                }
+                while (start < end && point <= nums[start]) {
+                    start++;
+                }
+                if (start < end) {
+                    nums[end--] = nums[start];
+                }
+            }
+            nums[start] = point;
+            if (start == k - 1) {
+                return nums[start];
+            } else if (start > k - 1) {
+                return quickSortFind(nums, l, start - 1, k);
+            } else {
+                return quickSortFind(nums, start + 1, r, k);
+            }
         }
     }
 //leetcode submit region end(Prohibit modification and deletion)
